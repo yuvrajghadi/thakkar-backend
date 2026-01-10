@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://thakkhar-froentend.vercel.app", // frontend URL
+    origin: "https://thakkarrealtors.com", // frontend URL
     credentials: true,
   })
 );
