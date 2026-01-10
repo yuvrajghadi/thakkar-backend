@@ -3,22 +3,29 @@ import cors from "cors";
 import dotenv from "dotenv";
 import propertyRoutes from "./property.routes.js";
 
-dotenv.config(); // ✅ LOAD ENV VARIABLES
+dotenv.config();
 
 const app = express();
 
+/* ===================== CORS ===================== */
 app.use(
   cors({
-    origin: "https://thakkarrealtors.com", // frontend URL
+    origin: "https://thakkarrealtors.com",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
+/* 🔥 THIS IS THE KEY LINE */
+app.options("*", cors());
+
 app.use(express.json());
 
-// ROUTES
+/* ===================== ROUTES ===================== */
 app.use("/", propertyRoutes);
 
+/* ===================== SERVER ===================== */
 app.listen(process.env.PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${process.env.PORT}`);
+  console.log(`🚀 Server running on port ${process.env.PORT}`);
 });

@@ -8,6 +8,11 @@ const router = express.Router();
 
 /* ================= VERIFY ADMIN MIDDLEWARE ================= */
 const verifyAdmin = (req, res, next) => {
+  // ✅ allow preflight requests
+  if (req.method === "OPTIONS") {
+    return next();
+  }
+
   const authHeader = req.headers.authorization;
 
   if (!authHeader)
@@ -26,6 +31,7 @@ const verifyAdmin = (req, res, next) => {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
+
 
 /* ================= SAVE PROPERTY (ADMIN) ================= */
 router.post("/api/property", verifyAdmin, async (req, res) => {
